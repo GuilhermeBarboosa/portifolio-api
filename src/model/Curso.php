@@ -11,14 +11,12 @@
 	 
 	namespace src\model; 
 
-	class Perfil_tela {
+	class Curso {
 			
 		private $id;
+		private $descricao;
 		private $cadastrado;
 		private $modificado;
-		private $perfis;
-		private $tipos_permissoes;
-		private $telas;
 			
 		public function __construct() { }
 			
@@ -28,6 +26,14 @@
 		
 		public function setId($id) {
 			$this->id = $id;
+		}		
+					
+		public function getDescricao() {
+			return $this->descricao;
+		}
+		
+		public function setDescricao($descricao) {
+			$this->descricao = $descricao;
 		}		
 					
 		public function getCadastrado() {
@@ -44,30 +50,6 @@
 		
 		public function setModificado($modificado) {
 			$this->modificado = $modificado;
-		}		
-					
-		public function getPerfis() {
-			return $this->perfis;
-		}
-		
-		public function setPerfis($perfis) {
-			$this->perfis = $perfis;
-		}		
-					
-		public function getTipos_permissoes() {
-			return $this->tipos_permissoes;
-		}
-		
-		public function setTipos_permissoes($tipos_permissoes) {
-			$this->tipos_permissoes = $tipos_permissoes;
-		}		
-					
-		public function getTelas() {
-			return $this->telas;
-		}
-		
-		public function setTelas($telas) {
-			$this->telas = $telas;
 		}		
 					
 	}

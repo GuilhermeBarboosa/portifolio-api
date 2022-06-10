@@ -12,10 +12,10 @@
 	namespace src\model; 
 	use src\model;	
 
-	class PerfisOutput implements \JsonSerializable {
+	class CursoOutput implements \JsonSerializable {
 			
 		private $id;
-		private $perfil;
+		private $descricao;
 		private $cadastrado;
 		private $modificado;
 			
@@ -29,12 +29,12 @@
 			$this->id = $id;
 		}
 					
-		public function getPerfil() {
-			return $this->perfil;
+		public function getDescricao() {
+			return $this->descricao;
 		}
 		
-		public function setPerfil($perfil) {
-			$this->perfil = $perfil;
+		public function setDescricao($descricao) {
+			$this->descricao = $descricao;
 		}
 					
 		public function getCadastrado() {
@@ -53,25 +53,25 @@
 			$this->modificado = $modificado;
 		}
 
-		public function getOutput($perfis) {
-			if (!is_null($perfis)) {
-				$perfisOutput = new model\PerfisOutput();
-				$perfisOutput->setId($perfis->getId());
-				$perfisOutput->setPerfil($perfis->getPerfil());
-				return $perfisOutput;
+		public function getOutput($curso) {
+			if (!is_null($curso)) {
+				$cursoOutput = new model\CursoOutput();
+				$cursoOutput->setId($curso->getId());
+				$cursoOutput->setDescricao($curso->getDescricao());
+				return $cursoOutput;
 			} else {
 				return null;
 			}
 		}
 			
-		public function getOutputList($perfisList) {
-			$perfisOutputList = array();
+		public function getOutputList($cursoList) {
+			$cursoOutputList = array();
 			$count = NUMBER_ZERO;
-			for ($x = NUMBER_ZERO; $x < sizeof($perfisList); $x++) {
-				$perfisOutputList[$count] = $this->getOutput($perfisList[$x]);
+			for ($x = NUMBER_ZERO; $x < sizeof($cursoList); $x++) {
+				$cursoOutputList[$count] = $this->getOutput($cursoList[$x]);
 				$count++;
 			}
-			return $perfisOutputList;
+			return $cursoOutputList;
 		}
 		
 		public function jsonSerialize() {

@@ -24,8 +24,8 @@
 	 * types: string16, string32, string64,
 	 * integer, double,
 	 * date, datetime, time, new, now,
-	 * cpf, cnpj, cep, phone, cellphone,
-	 * photo, photoWithPosition, position, upload
+	 * email, cpf, cnpj, cep, phone, cellphone,
+	 * photo, photoWithPosition, position, upload, order, link
 	 */ 
 	$fields = array("id" => "integer",
 			"cadastrado" => "new",
@@ -39,24 +39,33 @@
 			"tipos_permissoes" => "tipo_permissao",
 			"telas" => "tela"
 	);
+			
+	/*
+	 * $fkFields = array("field" => "type");
+	 *
+	 * types: session, base, standard, advanced, autocomplete
+	 */ 
+	$fkFields = array("perfis" => "standard",
+			"tipos_permissoes" => "standard",
+			"telas" => "standard"
+	);
 				
 	// Set the table if this screen call another
 	$call = "";
 	
 	// Set the column for answer after the call
-	$answer = "";
+	$answer = "perfis";
 
 	/*
 	 * Builder
 	 */
 	$builder = new getz\Builder();
-	$builder->entity($table, $fields, $fk);
-	$builder->input($table, $fields, $fk);
-	$builder->json($table, $fields, $fk);
-	$builder->output($table, $fields, $fk);
-	$builder->dao($table, $fields, $fk);
+	$builder->model($table, $fields, $fk);
+	$builder->view($table, $fields, $fk, $fkFields, $call);
+	$builder->controller($table, $fields, $fk, $fkFields, $answer);
+	$builder->dao($table, $fields, $fk);	 
+	$builder->handler($table, $fields, $fk);
+	$builder->response($table, $fields, $fk);
 	$builder->daoFactory($table, $fields, $fk);
-	$builder->controller($table, $fields, $fk, $answer);
-	$builder->constants($table, $fields, $fk);
 				
 ?>

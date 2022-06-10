@@ -13,10 +13,10 @@
 	use lib\getz;
 	use src\model;
 
-	class PerfisInput extends getz\Inject {
+	class CursoInput extends getz\Inject {
 			
 		private $id;
-		private $perfil;
+		private $descricao;
 		private $cadastrado;
 		private $modificado;
 			
@@ -26,8 +26,8 @@
 			if (isset($request[ID])) {
 				$this->id = $this->inject($request[ID]);	
 			}
-			if (isset($request[PERFIL])) {
-				$this->perfil = $this->inject($request[PERFIL]);	
+			if (isset($request[DESCRICAO])) {
+				$this->descricao = $this->inject($request[DESCRICAO]);	
 			}
 			if (isset($request[CADASTRADO])) {
 				$this->cadastrado = $this->inject($request[CADASTRADO]);	
@@ -45,12 +45,12 @@
 			$this->id = $id;
 		}
 					
-		public function getPerfil() {
-			return $this->perfil;
+		public function getDescricao() {
+			return $this->descricao;
 		}
 		
-		public function setPerfil($perfil) {
-			$this->perfil = $perfil;
+		public function setDescricao($descricao) {
+			$this->descricao = $descricao;
 		}
 					
 		public function getCadastrado() {
@@ -79,8 +79,8 @@
 
 		public function isValid($method) {		
 			if ($method == POST) {
-				if (is_null($this->perfil) || empty($this->perfil)) {
-					$this->setError(THE_ATTRIBUTE . PERFIL . IS_REQUIRED);
+				if (is_null($this->descricao) || empty($this->descricao)) {
+					$this->setError(THE_ATTRIBUTE . DESCRICAO . IS_REQUIRED);
 					return false;					
 				} 
 				return true;
@@ -95,16 +95,16 @@
 		}
 		
 		public function getEntity() {
-			$perfis = new model\Perfis();
+			$curso = new model\Curso();
 			if (!is_null($this->id)) {
-				$perfis->setId($this->id);
+				$curso->setId($this->id);
 			}
-			if (!is_null($this->perfil)) {
-				$perfis->setPerfil($this->perfil);	
+			if (!is_null($this->descricao)) {
+				$curso->setDescricao($this->descricao);	
 			} 
-			$perfis->setCadastrado(date(YMD_HIS, (time() - ONE_HOUR_IN_SECONDS * BRAZILIAN_TIME_ZONE)));
-			$perfis->setModificado(date(YMD_HIS, (time() - ONE_HOUR_IN_SECONDS * BRAZILIAN_TIME_ZONE)));
-			return $perfis;
+			$curso->setCadastrado(date(YMD_HIS, (time() - ONE_HOUR_IN_SECONDS * BRAZILIAN_TIME_ZONE)));
+			$curso->setModificado(date(YMD_HIS, (time() - ONE_HOUR_IN_SECONDS * BRAZILIAN_TIME_ZONE)));
+			return $curso;
 		}		
 		
 	}

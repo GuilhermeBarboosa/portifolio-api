@@ -16,7 +16,7 @@
 			
 	use lib\getz;
 			
-	$table = "perfis";
+	$table = "curso";
 			
 	/*
 	 * $fields = array("field" => "type");
@@ -24,11 +24,11 @@
 	 * types: string16, string32, string64,
 	 * integer, double,
 	 * date, datetime, time, new, now,
-	 * email, cpf, cnpj, cep, phone, cellphone,
-	 * photo, photoWithPosition, position, upload, order, link
+	 * cpf, cnpj, cep, phone, cellphone,
+	 * photo, photoWithPosition, position, upload
 	 */ 
 	$fields = array("id" => "integer",
-			"perfil" => "string32",
+			"descricao" => "string32",
 			"cadastrado" => "new",
 			"modificado" => "now"
 	);
@@ -38,17 +38,9 @@
 	 */
 	$fk = array(
 	);
-			
-	/*
-	 * $fkFields = array("field" => "type");
-	 *
-	 * types: session, base, standard, advanced, autocomplete
-	 */ 
-	$fkFields = array(
-	);
 				
 	// Set the table if this screen call another
-	$call = "perfil_tela";
+	$call = "";
 	
 	// Set the column for answer after the call
 	$answer = "";
@@ -57,12 +49,13 @@
 	 * Builder
 	 */
 	$builder = new getz\Builder();
-	$builder->model($table, $fields, $fk);
-	$builder->view($table, $fields, $fk, $fkFields, $call);
-	$builder->controller($table, $fields, $fk, $fkFields, $answer);
-	$builder->dao($table, $fields, $fk);	 
-	$builder->handler($table, $fields, $fk);
-	$builder->response($table, $fields, $fk);
+	$builder->entity($table, $fields, $fk);
+	$builder->input($table, $fields, $fk);
+	$builder->json($table, $fields, $fk);
+	$builder->output($table, $fields, $fk);
+	$builder->dao($table, $fields, $fk);
 	$builder->daoFactory($table, $fields, $fk);
+	$builder->controller($table, $fields, $fk, $answer);
+	$builder->constants($table, $fields, $fk);
 				
 ?>

@@ -13,29 +13,29 @@
 	use lib\getz;
 	use src\model;
 	
-	class Perfis extends getz\Activator {
+	class Curso extends getz\Activator {
 		
 		public function __construct() { }
 		
 		public function init() {
 			enableCORS();
 			if ($_SERVER[REQUEST_METHOD] == strtoupper(POST)) {
-				$perfisInput = new model\PerfisInput($this->request);
-				if ($perfisInput->isValid(POST)) {
+				$cursoInput = new model\CursoInput($this->request);
+				if ($cursoInput->isValid(POST)) {
 					$this->daoFactory->beginTransaction();
-					$perfisDao = $this->daoFactory->getPerfisDao();
-					$result = $perfisDao->create($perfisInput->getEntity());
-					$this->log->write(POST, $perfisDao->getLog(), $this->debug);
-					$insertId = $perfisDao->getInsertId();
+					$cursoDao = $this->daoFactory->getCursoDao();
+					$result = $cursoDao->create($cursoInput->getEntity());
+					$this->log->write(POST, $cursoDao->getLog(), $this->debug);
+					$insertId = $cursoDao->getInsertId();
 					if ($result) {		
-						$perfisList = $perfisDao->read(PERFIS . DOT . ID . WHITE_SPACE . EQUALS . 
+						$cursoList = $cursoDao->read(CURSO . DOT . ID . WHITE_SPACE . EQUALS . 
 								WHITE_SPACE . $insertId, STRING_EMPTY, false);
-						$this->log->write(GET, $perfisDao->getLog(), $this->debug);
-						$perfisOutput = new model\PerfisOutput();
-						$this->response[RESPONSE][PERFIS][VALUE] = $perfisOutput->getOutputList(
-								$perfisList);									
-						$this->response[RESPONSE][PERFIS][SIZE] = sizeOf(
-								$this->response[RESPONSE][PERFIS][VALUE]);							
+						$this->log->write(GET, $cursoDao->getLog(), $this->debug);
+						$cursoOutput = new model\CursoOutput();
+						$this->response[RESPONSE][CURSO][VALUE] = $cursoOutput->getOutputList(
+								$cursoList);									
+						$this->response[RESPONSE][CURSO][SIZE] = sizeOf(
+								$this->response[RESPONSE][CURSO][VALUE]);							
 						$this->daoFactory->commit();
 						$this->response[RESPONSE][STATUS] = NUMBER_TWO_HUNDRED;
 						$this->response[RESPONSE][MESSAGE] = SUCCESS;								
@@ -47,32 +47,32 @@
 					$this->daoFactory->close();					
 				} else {
 					$this->response[RESPONSE][STATUS] = NUMBER_FOUR_HUNDRED;
-					$this->response[RESPONSE][MESSAGE] = $perfisInput->getError();
+					$this->response[RESPONSE][MESSAGE] = $cursoInput->getError();
 				}
 			} else if ($_SERVER[REQUEST_METHOD] == strtoupper(GET)) {
 				if ($this->resource != STRING_EMPTY) {
-					$this->where = PERFIS . DOT . ID . WHITE_SPACE . EQUALS . WHITE_SPACE . $this->resource;	
+					$this->where = CURSO . DOT . ID . WHITE_SPACE . EQUALS . WHITE_SPACE . $this->resource;	
 				}
 				if ($this->order == STRING_EMPTY) {
-					$this->order = PERFIS . DOT . ID . WHITE_SPACE . DESC;
+					$this->order = CURSO . DOT . ID . WHITE_SPACE . DESC;
 				}
 				$this->daoFactory->beginTransaction();
-				$perfisDao = $this->daoFactory->getPerfisDao();
-				$perfisList = $perfisDao->read($this->where, $this->order, $this->hasPagination);	
-				$this->log->write(GET, $perfisDao->getLog(), $this->debug);
-				$perfisOutput = new model\PerfisOutput();
-				$this->response[RESPONSE][PERFIS][VALUE] = $perfisOutput->getOutputList($perfisList);													
+				$cursoDao = $this->daoFactory->getCursoDao();
+				$cursoList = $cursoDao->read($this->where, $this->order, $this->hasPagination);	
+				$this->log->write(GET, $cursoDao->getLog(), $this->debug);
+				$cursoOutput = new model\CursoOutput();
+				$this->response[RESPONSE][CURSO][VALUE] = $cursoOutput->getOutputList($cursoList);													
 				$this->daoFactory->close();				
 				if ($this->hasPagination) {
-					$this->response[RESPONSE][PERFIS][SIZE] = $perfisDao->getSize();
-					if ($this->response[RESPONSE][PERFIS][SIZE] == NUMBER_ZERO) {
+					$this->response[RESPONSE][CURSO][SIZE] = $cursoDao->getSize();
+					if ($this->response[RESPONSE][CURSO][SIZE] == NUMBER_ZERO) {
 						$this->response[RESPONSE] = null;
 						$this->response[RESPONSE][MESSAGE] = DATA_NOT_FOUND;
 					}
 				} else {
-					$this->response[RESPONSE][PERFIS][SIZE] = sizeOf(
-							$this->response[RESPONSE][PERFIS][VALUE]);	
-					if ($this->response[RESPONSE][PERFIS][SIZE] == NUMBER_ZERO) {
+					$this->response[RESPONSE][CURSO][SIZE] = sizeOf(
+							$this->response[RESPONSE][CURSO][VALUE]);	
+					if ($this->response[RESPONSE][CURSO][SIZE] == NUMBER_ZERO) {
 						$this->response[RESPONSE] = null;
 						$this->response[RESPONSE][MESSAGE] = DATA_NOT_FOUND;
 					}
@@ -81,25 +81,25 @@
 			} else if ($_SERVER[REQUEST_METHOD] == strtoupper(PUT)) {		
 				if ($this->resource != STRING_EMPTY && !empty($this->request) && $this->request[ID] == 
 						$this->resource) {
-					$perfisInput = new model\PerfisInput($this->request);
-					if ($perfisInput->isValid(PUT)) {
+					$cursoInput = new model\CursoInput($this->request);
+					if ($cursoInput->isValid(PUT)) {
 						$this->daoFactory->beginTransaction();
-						$perfisDao = $this->daoFactory->getPerfisDao();
-						$perfisList = $perfisDao->read(PERFIS . DOT . ID . WHITE_SPACE . EQUALS . 
+						$cursoDao = $this->daoFactory->getCursoDao();
+						$cursoList = $cursoDao->read(CURSO . DOT . ID . WHITE_SPACE . EQUALS . 
 								WHITE_SPACE . $this->resource, STRING_EMPTY, false);
-						$this->log->write(GET, $perfisDao->getLog(), $this->debug);
-						if (!is_null($perfisList) && sizeOf($perfisList) > NUMBER_ZERO) {
-							$result = $perfisDao->update($perfisInput->getEntity());
-							$this->log->write(PUT, $perfisDao->getLog(), $this->debug);	
+						$this->log->write(GET, $cursoDao->getLog(), $this->debug);
+						if (!is_null($cursoList) && sizeOf($cursoList) > NUMBER_ZERO) {
+							$result = $cursoDao->update($cursoInput->getEntity());
+							$this->log->write(PUT, $cursoDao->getLog(), $this->debug);	
 							if ($result) {	
-								$perfisList = $perfisDao->read(PERFIS . DOT . ID . WHITE_SPACE . EQUALS . 
+								$cursoList = $cursoDao->read(CURSO . DOT . ID . WHITE_SPACE . EQUALS . 
 										WHITE_SPACE . $this->resource, STRING_EMPTY, false);
-								$this->log->write(GET, $perfisDao->getLog(), $this->debug);
-								$perfisOutput = new model\PerfisOutput();
-								$this->response[RESPONSE][PERFIS][VALUE] = $perfisOutput->getOutputList(
-										$perfisList);									
-								$this->response[RESPONSE][PERFIS][SIZE] = sizeOf(
-										$this->response[RESPONSE][PERFIS][VALUE]);							
+								$this->log->write(GET, $cursoDao->getLog(), $this->debug);
+								$cursoOutput = new model\CursoOutput();
+								$this->response[RESPONSE][CURSO][VALUE] = $cursoOutput->getOutputList(
+										$cursoList);									
+								$this->response[RESPONSE][CURSO][SIZE] = sizeOf(
+										$this->response[RESPONSE][CURSO][VALUE]);							
 								$this->daoFactory->commit();
 								$this->response[RESPONSE][STATUS] = NUMBER_TWO_HUNDRED;
 								$this->response[RESPONSE][MESSAGE] = SUCCESS;									
@@ -115,7 +115,7 @@
 						$this->daoFactory->close();
 					} else {
 						$this->response[RESPONSE][STATUS] = NUMBER_FOUR_HUNDRED;
-						$this->response[RESPONSE][MESSAGE] = $perfisInput->getError();
+						$this->response[RESPONSE][MESSAGE] = $cursoInput->getError();
 					}
 				} else {
 					$this->response[RESPONSE][STATUS] = NUMBER_FOUR_HUNDRED;
@@ -124,13 +124,13 @@
 			} else if ($_SERVER[REQUEST_METHOD] == strtoupper(DELETE)) {
 				if ($this->resource != STRING_EMPTY) {
 					$this->daoFactory->beginTransaction();
-					$perfisDao = $this->daoFactory->getPerfisDao();
-					$perfisList = $perfisDao->read(PERFIS . DOT . ID . WHITE_SPACE . EQUALS . WHITE_SPACE . 
+					$cursoDao = $this->daoFactory->getCursoDao();
+					$cursoList = $cursoDao->read(CURSO . DOT . ID . WHITE_SPACE . EQUALS . WHITE_SPACE . 
 							$this->resource, STRING_EMPTY, false);
-					$this->log->write(GET, $perfisDao->getLog(), $this->debug);
-					if (!is_null($perfisList) && sizeOf($perfisList) > NUMBER_ZERO) {
-						$result = $perfisDao->delete($perfisList[NUMBER_ZERO]);
-						$this->log->write(DELETE, $perfisDao->getLog(), $this->debug);	
+					$this->log->write(GET, $cursoDao->getLog(), $this->debug);
+					if (!is_null($cursoList) && sizeOf($cursoList) > NUMBER_ZERO) {
+						$result = $cursoDao->delete($cursoList[NUMBER_ZERO]);
+						$this->log->write(DELETE, $cursoDao->getLog(), $this->debug);	
 						if ($result) {
 							$this->daoFactory->commit();
 							$this->response[RESPONSE][STATUS] = NUMBER_TWO_HUNDRED;

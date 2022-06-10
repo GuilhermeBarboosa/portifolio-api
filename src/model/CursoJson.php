@@ -1,9 +1,9 @@
 function foo() {
 	let data = {
 		"id": gV(gI("id")),
-		"perfil": gV(gI("perfil"))
+		"descricao": gV(gI("descricao"))
 	};
-	request("POST", dv_gateway + "/perfis", "", data, "controllerResponse", true, getCookie(gz_project));
+	request("POST", dv_gateway + "/curso", "", data, "controllerResponse", true, getCookie(gz_project));
 }
 			
 {
@@ -18,9 +18,9 @@ function foo() {
 		],
 		[
 			{
-				"label": "perfil",
+				"label": "descricao",
 				"type": "input",
-				"id": "perfil",
+				"id": "descricao",
 				"class": "dv-required"
 			}
 		]

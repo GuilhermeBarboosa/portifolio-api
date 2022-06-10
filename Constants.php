@@ -235,5 +235,8 @@
 	define("PASSWORD_TOKEN_EXPIRATION", "password_token_expiration");
 	define("ACTIVATION_TOKEN", "activation_token");
 	define("ACTIVATION_TOKEN_EXPIRATION", "activation_token_expiration");
+	define("CURSO", "curso");
+	define("CURSO_INPUT", "cursoInput");
+	define("DESCRICAO", "descricao");
 			
 		?>
